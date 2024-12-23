@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presensi DIPA Joiner</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom right, #2c3e50, #3498db);
+            color: white;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .box {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .box h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .box p {
+            font-size: 1rem;
+        }
+
+        .presensi-item {
+            background: rgba(255, 255, 255, 0.9);
+            color: #2c3e50;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .presensi-item .info {
+            flex: 70%;
+        }
+
+        .presensi-item .info h3 {
+            font-size: 1.2rem;
+            color: #3498db;
+        }
+
+        .presensi-item .info p {
+            font-size: 0.9rem;
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .presensi-item .status {
+            flex: 30%;
+            text-align: center;
+        }
+
+        .presensi-item .status p {
+            font-size: 0.9rem;
+            margin: 5px 0;
+        }
+
+        .presensi-item .status span {
+            font-size: 1.2rem;
+            color: green;
+            font-weight: bold;
+        }
+
+        .presensi-item .status span.red {
+            color: red;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2c3e50;
+        }
+
+        /* Mobile layout: 1 column */
+        .box {
+            flex: 100%;
+        }
+
+        /* Desktop layout: 25%, 35%, 15%, 25% */
+        @media (min-width: 1024px) {
+            .box:nth-child(1) {
+                flex: 25%;
+            }
+            .box:nth-child(2) {
+                flex: 35%;
+            }
+            .box:nth-child(3) {
+                flex: 15%;
+            }
+            .box:nth-child(4) {
+                flex: 25%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Presensi DIPA Joiner</h1>
+    <div class="container">
+        <div class="box">
+            <h2>Presensi Masuk</h2>
+            <p>Total: 2 Hadir</p>
+        </div>
+        <div class="box">
+            <h2>Presensi Keluar</h2>
+            <p>Total: 2 Hadir</p>
+        </div>
+        <div class="box">
+            <h2>Status Kehadiran</h2>
+            <p>1 Tidak Hadir</p>
+        </div>
+        <div class="box">
+            <h2>Persentasi Kehadiran</h2>
+            <p><span id="kehadiranPersen">0%</span></p>
+        </div>
+    </div>
+
+    <div class="presensi-item">
+        <div class="info">
+            <h3>P1 Instalasi Tool Pemrograman</h3>
+            <p>30 of 37 sudah hadir</p>
+            <p><strong>Jadwal Tatap Muka:</strong> Mon, Sep 16, 07:30 ~ 3 bulan yang lalu</p>
+            <p><strong>Opening:</strong> Sep 16, 2024, 08:00 ~ 3 bulan yang lalu</p>
+            <p><strong>Closing:</strong> <span style="color: red;">Sep 22, 2024, 00:00</span> ~ 3 bulan yang lalu</p>
+        </div>
+        <div class="status">
+            <p>Ontime at</p>
+            <span>Mon, Sep 23, 11:54:36</span>
+            <p>2,976 LP</p>
+            <button>Set Saya Hadir</button>
+        </div>
+    </div>
+
+    <!-- Additional presensi items -->
+    <div class="presensi-item">
+        <div class="info">
+            <h3>P2 Pemrograman Lanjut</h3>
+            <p>28 of 30 sudah hadir</p>
+            <p><strong>Jadwal Tatap Muka:</strong> Tue, Dec 24, 09:00</p>
+            <p><strong>Opening:</strong> Dec 24, 2024, 09:00</p>
+            <p><strong>Closing:</strong> Dec 24, 2024, 12:00</p>
+        </div>
+        <div class="status">
+            <p>Ontime</p>
+            <span class="red">Tidak Hadir</span>
+            <button>Set Saya Hadir</button>
+        </div>
+    </div>
+
+    <div class="presensi-item">
+        <div class="info">
+            <h3>P3 Database Management</h3>
+            <p>29 of 30 sudah hadir</p>
+            <p><strong>Jadwal Tatap Muka:</strong> Wed, Dec 25, 10:00</p>
+            <p><strong>Opening:</strong> Dec 25, 2024, 10:00</p>
+            <p><strong>Closing:</strong> Dec 25, 2024, 13:00</p>
+        </div>
+        <div class="status">
+            <p>Ontime at</p>
+            <span>Mon, Sep 25, 17:22:59</span>
+            <p>3,156 LP</p> <!-- LP diatur bebas -->
+            <button>Set Saya Hadir</button>
+        </div>
+    </div>
+    
+
+    <script>
+        function calculatePercentage() {
+            const totalHadir = 2; // Replace with your logic to calculate hadir
+            const totalTidakHadir = 1; // Replace with your logic to calculate tidak hadir
+            const total = totalHadir + totalTidakHadir;
+            const percentage = ((totalHadir / total) * 100).toFixed(2);
+            document.getElementById('kehadiranPersen').innerText = percentage + "%";
+        }
+
+        calculatePercentage();
+    </script>
+</body>
+</html>
